@@ -2,9 +2,9 @@ package nicehash
 
 import (
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestGetOrders(t *testing.T) {
@@ -24,20 +24,21 @@ func TestGetOrders(t *testing.T) {
 		    "workers":0,
 		    "accepted_speed":"0.0"
 		 }
-	      ]
+	      ],
+       "timestamp":1553262503	
 	   },
 	   "method":"orders.get"
 	}`
 
 	expectedItem := []Orders{
 		{
-			Type: 0,
-			Id: 5877,
-			Price: 0.0505,
-			Algo: 1,
-			Alive: true,
-			LimitSpeed: 1.0,
-			Workers: 0,
+			Type:          0,
+			Id:            5877,
+			Price:         0.0505,
+			Algo:          1,
+			Alive:         true,
+			LimitSpeed:    1.0,
+			Workers:       0,
 			AcceptedSpeed: 0.0,
 		},
 	}
@@ -50,7 +51,8 @@ func TestGetOrders(t *testing.T) {
 	})
 
 	nicehashClient := NewNicehashClient(httpClient, "", "FAKEID", "FAKEKEY", "")
-	stats, err := nicehashClient.GetOrders(0, 0)
+	stats, timestamp, err := nicehashClient.GetOrders(0, 0)
+	fmt.Println(timestamp)
 
 	assert.Nil(t, err)
 	assert.Equal(t, expectedItem, stats)
@@ -87,21 +89,21 @@ func TestGetMyOrders(t *testing.T) {
 
 	expectedItem := []MyOrders{
 		{
-			Type: 0,
-			BtcAvail: 0.01751439,
-			LimitSpeed: 0.0,
-			PoolUser: "worker",
-			PoolPort: 3333,
-			Alive: false,
-			Workers: 0,
-			PoolPass: "x",
+			Type:          0,
+			BtcAvail:      0.01751439,
+			LimitSpeed:    0.0,
+			PoolUser:      "worker",
+			PoolPort:      3333,
+			Alive:         false,
+			Workers:       0,
+			PoolPass:      "x",
 			AcceptedSpeed: 0.0,
-			Id: 1879,
-			Algo: 0,
-			Price: 1.0000,
-			BtcPaid: 0.00000000,
-			PoolHost: "testpool.com",
-			End: 1413294447421,
+			Id:            1879,
+			Algo:          0,
+			Price:         1.0000,
+			BtcPaid:       0.00000000,
+			PoolHost:      "testpool.com",
+			End:           1413294447421,
 		},
 	}
 
