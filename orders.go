@@ -154,7 +154,7 @@ func (client *NicehashClient) OrderSetLimit(algo AlgoType, location Location, or
 			Success string `json:"success"`
 		} `json:"result"`
 	}{}
-	params := &Params{Method: "orders.set.price.limit", Algo: algo, Location: location, Order: order, Limit: limit, ApiId: client.apiid, ApiKey: client.apikey}
+	params := &Params{Method: "orders.set.limit", Algo: algo, Location: location, Order: order, Limit: limit, ApiId: client.apiid, ApiKey: client.apikey}
 	_, err := client.sling.New().Get("").QueryStruct(params).ReceiveSuccess(&stats)
 	if err != nil {
 		return stats.Result.Success, err
